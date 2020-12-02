@@ -1,0 +1,51 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <RootNamespace>Ratings_Calc</RootNamespace>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="The Algorithm">
+      <HintPath>Lib\The Algorithm.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\4jpicon.png" />
+    <Resource Include="Images\aicon.png" />
+    <Resource Include="Images\bunicon.png" />
+    <Resource Include="Images\ghosticon.png" />
+    <Resource Include="Images\gicon.png" />
+    <Resource Include="Images\gnfosicon.png" />
+    <Resource Include="Images\kissuicon.png" />
+    <Resource Include="Images\nenpoicon.png" />
+    <Resource Include="Images\otaicon.png" />
+    <Resource Include="Images\pissuicon.png" />
+    <Resource Include="Images\qaicon.png" />
+    <Resource Include="Images\ratheader.png" />
+    <Resource Include="Images\ratingcalc.png" />
+    <Resource Include="Images\ratingheader.png" />
+    <Resource Include="Images\tvicon.png" />
+    <Resource Include="Images\vicon.png" />
+    <Resource Include="Images\whaticon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,88 @@
+﻿<Window x:Class="Ratings_Calc.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Ratings_Calc"
+        mc:Ignorable="d"
+        Title="Official 4channel Rating Machine" Icon="{StaticResource Header}" Height="500" Width="600" MaxWidth="600" MaxHeight="500" ScrollViewer.VerticalScrollBarVisibility="Disabled" MinWidth="600" MinHeight="500">
+    <Grid x:Name="MainGrid" Background="Black">
+        <Grid.ColumnDefinitions>
+        </Grid.ColumnDefinitions>
+        <Image Margin="10,2,10,0" Height="50" VerticalAlignment="Top" Source="{StaticResource Header}" />
+        <Grid x:Name="boardGrid" Margin="10,55,10,0" Background="Black" Height="48" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition ToolTip="Select board to rate." />
+                <ColumnDefinition Width="33*" />
+                <ColumnDefinition Width="19*" />
+                <ColumnDefinition Width="19*" />
+                <ColumnDefinition Width="19*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="1" TextWrapping="Wrap" Foreground="White" TextAlignment="Center" FontSize="20" FontWeight="Bold" TextDecorations="{x:Null}" FontStyle="Italic" Margin="20,12" VerticalAlignment="Center" HorizontalAlignment="Center" Width="74" Text="Board:" FontFamily="Unispace" />
+            <Button x:Name="btnFourjp" Content="4/jp/" Grid.Column="2" Background="#FF363636" Foreground="White" FontSize="18" FontWeight="Bold" FontFamily="Unispace" BorderThickness="1" ClipToBounds="True" Margin="0" Click="BtnFourjp_Click" />
+            <Button x:Name="btnGnfos" Content="/gnfos/" Grid.Column="3" Background="#FF363636" Foreground="White" FontSize="18" FontWeight="Bold" FontFamily="Unispace" BorderThickness="1" ClipToBounds="True" Margin="0" Click="BtnGnfos_Click" />
+            <Button x:Name="btnOta" Content="/ota/" Grid.Column="4" Background="#FF363636" Foreground="White" FontSize="18" FontWeight="Bold" FontFamily="Unispace" BorderThickness="1" ClipToBounds="True" Margin="0" Click="BtnOta_Click" />
+        </Grid>
+        <Grid Margin="0,108,0,0" Height="47" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="205*" />
+                <ColumnDefinition Width="367*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock TextWrapping="Wrap" Foreground="White" TextAlignment="Center" FontSize="20" FontWeight="Bold" TextDecorations="{x:Null}" Text="Current Rating:" Margin="0,9" FontFamily="Unispace" HorizontalAlignment="Left" Width="212" />
+            <TextBlock x:Name="txtCurrRating"  Margin="6,8,16,9" TextWrapping="Wrap" Text="{Binding CurrRating}" VerticalAlignment="Center" FontSize="20" TextAlignment="Right" FontFamily="Unispace" FontWeight="Bold" Padding="0,3,10,3" Height="30" Grid.Column="1">
+                <TextBlock.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                        <GradientStop Color="#FF838383" Offset="1" />
+                        <GradientStop Color="White" Offset="0.75" />
+                    </LinearGradientBrush>
+                </TextBlock.Background>
+            </TextBlock>
+        </Grid>
+        <Grid Margin="0,155,0,0" Height="47" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="205*" />
+                <ColumnDefinition Width="367*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock TextWrapping="Wrap" Foreground="White" TextAlignment="Center" FontSize="20" FontWeight="Bold" TextDecorations="{x:Null}" Text="Final Rating:" Margin="0,9" FontFamily="Unispace" HorizontalAlignment="Left" Width="212" />
+            <TextBlock x:Name="txtFinalRating" Margin="6,8,14,9" TextWrapping="Wrap" Text="{Binding FinalRating}" VerticalAlignment="Center" FontSize="20" TextAlignment="Right" FontFamily="Unispace" FontWeight="Bold" Padding="0,3,10,3" Foreground="#FFBD0000" Height="30" Grid.Column="1">
+                <TextBlock.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                        <GradientStop Color="#FF838383" Offset="1" />
+                        <GradientStop Color="White" Offset="0.75" />
+                    </LinearGradientBrush>
+                </TextBlock.Background>
+            </TextBlock>
+        </Grid>
+        <Grid x:Name="calcGrid" Margin="210,207,10,60">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50*" />
+                <RowDefinition Height="50*" />
+                <RowDefinition Height="50*" />
+                <RowDefinition Height="50*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100*" />
+                <ColumnDefinition Width="100*" />
+                <ColumnDefinition Width="100*" />
+            </Grid.ColumnDefinitions>
+            <Button x:Name="zero" Content="0" Background="#FF363636" Foreground="White" FontSize="36" FontWeight="Bold" FontFamily="Unispace" BorderThickness="2" ClipToBounds="True" Margin="1" Grid.Column="0" Click="Zero_Click" />
+            <Button x:Name="one" Content="1" Background="#FF363636" Foreground="White" FontSize="36" FontWeight="Bold" FontFamily="Unispace" BorderThickness="2" ClipToBounds="True" Margin="1"  Grid.Column="1" Click="One_Click" />
+            <Button x:Name="two" Content="2" Background="#FF363636" Foreground="White" FontSize="36" FontWeight="Bold" FontFamily="Unispace" BorderThickness="2" ClipToBounds="True" Margin="1"  Grid.Column="2" Click="Two_Click" />
+            <Button x:Name="three" Content="3" Background="#FF363636" Foreground="White" FontSize="36" FontWeight="Bold" FontFamily="Unispace" BorderThickness="2" ClipToBounds="True" Margin="1" Grid.Column="0" Grid.Row="1" Click="Three_Click" />
+            <Button x:Name="four" Content="4" Background="#FF363636" Foreground="White" FontSize="36" FontWeight="Bold" FontFamily="Unispace" BorderThickness="2" ClipToBounds="True" Margin="1" Grid.Column="1" Grid.Row="1" Click="Four_Click" />
+            <Button x:Name="five" Content="5" Background="#FF363636" Foreground="White" FontSize="36" FontWeight="Bold" FontFamily="Unispace" BorderThickness="2" ClipToBounds="True" Margin="1" Grid.Column="2" Grid.Row="1" Click="Five_Click" />
+            <Button x:Name="six" Content="6" Background="#FF363636" Foreground="White" FontSize="36" FontWeight="Bold" FontFamily="Unispace" BorderThickness="2" ClipToBounds="True" Margin="1" Grid.Column="0" Grid.Row="2" Click="Six_Click" />
+            <Button x:Name="seven" Content="7" Background="#FF363636" Foreground="White" FontSize="36" FontWeight="Bold" FontFamily="Unispace" BorderThickness="2" ClipToBounds="True" Margin="1" Grid.Column="1" Grid.Row="2" Click="Seven_Click" />
+            <Button x:Name="eight" Content="8" Background="#FF363636" Foreground="White" FontSize="36" FontWeight="Bold" FontFamily="Unispace" BorderThickness="2" ClipToBounds="True" Margin="1" Grid.Column="2" Grid.Row="2" Click="Eight_Click" />
+            <Button x:Name="nine" Content="9" Background="#FF363636" Foreground="White" FontSize="36" FontWeight="Bold" FontFamily="Unispace" BorderThickness="2" ClipToBounds="True" Margin="1" Grid.Column="0" Grid.Row="3" Click="Nine_Click" />
+            <Button x:Name="ten" Content="10" Background="#FF363636" Foreground="White" FontSize="36" FontWeight="Bold" FontFamily="Unispace" BorderThickness="2" ClipToBounds="True" Margin="1" Grid.Column="1" Grid.Row="3" Click="Ten_Click" />
+            <Button x:Name="undo" Content="Undo" Background="#FF363636" Foreground="White" FontSize="36" FontWeight="Bold" FontFamily="Unispace" BorderThickness="2" ClipToBounds="True" Margin="1" Grid.Column="2" Grid.Row="3" Click="Undo_Click" />
+        </Grid>
+        <Grid Margin="32,207,0,0" HorizontalAlignment="Left" Width="151" Height="252" VerticalAlignment="Top">
+            <Image x:Name="boardImage" Source="{Binding Path=ImageUri}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" />
+        </Grid>
+        <Grid Margin="210,0,10,5" Height="55" VerticalAlignment="Bottom">
+            <Button x:Name="btnFinal" Content="CALCULATE FINAL RATING" Background="#FFB60000" Foreground="Black" FontSize="26" FontWeight="Bold" FontFamily="Unispace" BorderThickness="2" ClipToBounds="True" Margin="1" Click="BtnFinal_Click" BorderBrush="White" />
+        </Grid>
+    </Grid>
+</Window>
