@@ -25,7 +25,6 @@
     <Resource Include="Images\otaicon.png" />
     <Resource Include="Images\pissuicon.png" />
     <Resource Include="Images\qaicon.png" />
-    <Resource Include="Images\ratheader.png" />
     <Resource Include="Images\ratingcalc.png" />
     <Resource Include="Images\ratingheader.png" />
     <Resource Include="Images\tvicon.png" />
