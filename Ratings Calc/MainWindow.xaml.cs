@@ -6,7 +6,6 @@ using System.Runtime.CompilerServices;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Imaging;
 
 namespace Ratings_Calc
 {
@@ -17,82 +16,82 @@ namespace Ratings_Calc
     {
         private readonly Timer aTimer;
         private readonly Timer bTimer;
-        private readonly Dictionary<string, float?[]> boardRatings;
+        private readonly Dictionary<string, Ratings> boardRatings;
         private readonly Dictionary<string, List<int>> ratingsLists;
         private string currBoard;
         private float flickerOpacity;
-        private float currRating;
-        private string finalRating;
-        private Uri imageUri;
+        private float _currRating;
+        private string _finalRating;
+        private Uri _imageUri;
 
         public MainWindow()
         {
             InitializeComponent();
-            aTimer = new Timer();
-            bTimer = new Timer();
-            aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
-            bTimer.Elapsed += new ElapsedEventHandler(OnTimedEventB);
+            aTimer = new();
+            bTimer = new();
+            aTimer.Elapsed += new(OnTimedEvent);
+            bTimer.Elapsed += new(OnTimedEventB);
             aTimer.Interval = 50;
             bTimer.Interval = 5000;
             flickerOpacity = -0.25F;
-            finalRating = "Pending";
-            ImageUri = new Uri("pack://application:,,,/Images/ratingheader.png");
-            boardRatings = new Dictionary<string, float?[]>();
-            ratingsLists = new Dictionary<string, List<int>>();
-            foreach (var p in boardGrid.Children) if (p is Button) AddBoard((p as Button).Content.ToString());
-            txtCurrRating.DataContext = this;
-            txtFinalRating.DataContext = this;
-            boardImage.DataContext = this;
+            _finalRating = "Pending";
+            ImageUri = new("pack://application:,,,/Images/ratingheader.png");
+            boardRatings = new ();
+            ratingsLists = new();
+            foreach (var btn in boardGrid.Children.OfType<Button>()) AddBoard(btn.Content.ToString());
+            txtCurrRating.DataContext = txtFinalRating.DataContext = boardImage.DataContext = this;
+
+            void AddBoard(string board)
+            {
+                boardRatings.Add(board, new());
+                ratingsLists.Add(board, new());
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public float CurrRating
         {
-            get { return currRating; }
+            get => _currRating;
             set
             {
-                currRating = value;
+                _currRating = value;
                 OnPropertyChanged();
             }
         }
 
         public string FinalRating
         {
-            get { return finalRating; }
+            get => _finalRating;
             set
             {
-                finalRating = value;
+                _finalRating = value;
                 OnPropertyChanged();
             }
         }
 
         public Uri ImageUri
         {
-            get { return imageUri; }
+            get => _imageUri;
             set
             {
-                imageUri = value;
+                _imageUri = value;
                 OnPropertyChanged();
             }
         }
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        private void AddBoard(string board)
-        {
-            boardRatings.Add(board, new float?[] { null, null });
-            ratingsLists.Add(board, new List<int>());
+            PropertyChanged?.Invoke(this, new(propertyName));
         }
 
         private void Calc(object sender, RoutedEventArgs e)
         {
-            if (currBoard == null || currBoard == "4/jp") return;
-            ratingsLists[currBoard].Add(Convert.ToInt32((sender as Button).Content.ToString()));
-            CalcCurrent(ratingsLists[currBoard]);
+            if (currBoard is not null)
+            {
+                ratingsLists[currBoard].Add(Convert.ToInt32((sender as Button).Content.ToString()));
+                CalcCurrent(ratingsLists[currBoard]);
+            }
         }
 
         private void CalcCurrent(List<int> ratings)
@@ -101,14 +100,14 @@ namespace Ratings_Calc
             foreach (int rating in ratings) ratingsTotal += rating;
             float ratingFloat = ((float)ratingsTotal / ratings.Count);
             CurrRating = ratingFloat;
-            boardRatings[currBoard][0] = ratingFloat;
+            boardRatings[currBoard].Current = ratingFloat;
         }
 
         private void Update(object sender, RoutedEventArgs e)
         {
             currBoard = (sender as Button).Content.ToString();
-            ImageUri = new Uri("pack://application:,,,/Images/" + currBoard.Replace("/", string.Empty) + "icon.png");
-            if (currBoard == "4/jp/")
+            ImageUri = new("pack://application:,,,/Images/" + currBoard.Replace("/", string.Empty) + ".png");
+            if (currBoard is "4/jp/")
             {
                 foreach (Button btn in calcGrid.Children) btn.IsEnabled = false;
                 btnFinal.IsEnabled = false;
@@ -119,24 +118,24 @@ namespace Ratings_Calc
             {
                 foreach (Button btn in calcGrid.Children) btn.IsEnabled = true;
                 btnFinal.IsEnabled = true;
-                CurrRating = boardRatings[currBoard][0] ?? 0;
-                FinalRating = boardRatings[currBoard][1] switch
+                CurrRating = boardRatings[currBoard].Current ?? 0;
+                FinalRating = boardRatings[currBoard].Final switch
                 {
                     null => "Pending",
-                    _ => boardRatings[currBoard][1].ToString()
+                    _ => boardRatings[currBoard].Final
                 };
             }
         }
 
         private void BtnFinal_Click(object sender, RoutedEventArgs e)
         {
-            if (currBoard == null || currBoard == "4/jp") return;
-            int finalrating = The_Algorithm.The_Algorithm.TheAlgorithm(boardRatings[currBoard][0] ?? 0);
-            boardRatings[currBoard][1] = finalrating switch
+            if (currBoard is null) return;
+            int finalrating = The_Algorithm.The_Algorithm.TheAlgorithm(boardRatings[currBoard].Current ?? 0);
+            boardRatings[currBoard].Final = finalrating switch
             {
-                > 10 => 10,
-                < 0 => 0,
-                _ => finalrating
+                > 10 => "10",
+                < 0 => "0",
+                _ => finalrating.ToString()
             };
             FinalRating = "CALCULATING";
             foreach (Button btn in boardGrid.Children.OfType<Button>()) btn.IsEnabled = false;
@@ -150,8 +149,8 @@ namespace Ratings_Calc
         {
             Dispatcher.Invoke(() =>
             {
-                if (txtFinalRating.Foreground.Opacity == 1) flickerOpacity = -0.25F;
-                else if (txtFinalRating.Foreground.Opacity == 0) flickerOpacity = 0.25F;
+                if (txtFinalRating.Foreground.Opacity is 1) flickerOpacity = -0.25F;
+                else if (txtFinalRating.Foreground.Opacity is 0) flickerOpacity = 0.25F;
                 txtFinalRating.Foreground.Opacity += flickerOpacity;
                 if (!aTimer.Enabled) txtFinalRating.Foreground.Opacity = 1; // in case A is already being invoked when stopped
             });
@@ -163,7 +162,7 @@ namespace Ratings_Calc
             {
                 aTimer.Stop();
                 txtFinalRating.Foreground.Opacity = 1;
-                FinalRating = boardRatings[currBoard][1].ToString();
+                FinalRating = boardRatings[currBoard].Final;
                 foreach (Button btn in boardGrid.Children.OfType<Button>()) btn.IsEnabled = true;
                 foreach (Button btn in calcGrid.Children.OfType<Button>()) btn.IsEnabled = true;
                 btnFinal.IsEnabled = true;
@@ -173,7 +172,7 @@ namespace Ratings_Calc
 
         private void Undo_Click(object sender, RoutedEventArgs e)
         {
-            if (currBoard == null || currBoard == "4/jp") return;
+            if (currBoard is null) return;
             if (ratingsLists[currBoard].Any())
             {
                 ratingsLists[currBoard].RemoveAt(ratingsLists[currBoard].Count - 1);
@@ -209,5 +208,11 @@ namespace Ratings_Calc
         private void Nine_Click(object sender, RoutedEventArgs e) => Calc(sender, e);
 
         private void Ten_Click(object sender, RoutedEventArgs e) => Calc(sender, e);
+    }
+
+    record Ratings(float? Current = null, string Final = null)
+    {
+        public float? Current { get; set; } = Current;
+        public string Final { get; set; } = Final;
     }
 }

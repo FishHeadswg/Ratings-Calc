@@ -5,9 +5,9 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
-            <ImageSource x:Key="Gn">Images/gnfosicon.png</ImageSource>
-            <ImageSource x:Key="Ota">Images/otaicon.png</ImageSource>
-            <ImageSource x:Key="4jp">Images/4jpicon.png</ImageSource>
+            <ImageSource x:Key="Gn">Images/gnfos.png</ImageSource>
+            <ImageSource x:Key="Ota">Images/ota.png</ImageSource>
+            <ImageSource x:Key="4jp">Images/4jp.png</ImageSource>
             <ImageSource x:Key="Header">Images/ratingheader.png</ImageSource>
         </ResourceDictionary>
     </Application.Resources>

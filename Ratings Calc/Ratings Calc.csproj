@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -14,22 +14,22 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\4jpicon.png" />
-    <Resource Include="Images\aicon.png" />
-    <Resource Include="Images\bunicon.png" />
-    <Resource Include="Images\ghosticon.png" />
-    <Resource Include="Images\gicon.png" />
-    <Resource Include="Images\gnfosicon.png" />
-    <Resource Include="Images\kissuicon.png" />
-    <Resource Include="Images\nenpoicon.png" />
-    <Resource Include="Images\otaicon.png" />
-    <Resource Include="Images\pissuicon.png" />
-    <Resource Include="Images\qaicon.png" />
+    <Resource Include="Images\4jp.png" />
+    <Resource Include="Images\a.png" />
+    <Resource Include="Images\bun.png" />
+    <Resource Include="Images\ghost.png" />
+    <Resource Include="Images\g.png" />
+    <Resource Include="Images\gnfos.png" />
+    <Resource Include="Images\kissu.png" />
+    <Resource Include="Images\nenpo.png" />
+    <Resource Include="Images\ota.png" />
+    <Resource Include="Images\pissu.png" />
+    <Resource Include="Images\qa.png" />
     <Resource Include="Images\ratingcalc.png" />
     <Resource Include="Images\ratingheader.png" />
-    <Resource Include="Images\tvicon.png" />
-    <Resource Include="Images\vicon.png" />
-    <Resource Include="Images\whaticon.png" />
+    <Resource Include="Images\tv.png" />
+    <Resource Include="Images\v.png" />
+    <Resource Include="Images\what.png" />
   </ItemGroup>
 
   <ItemGroup>
