@@ -51,7 +51,6 @@ namespace DailyRatingsCalculator.Tests.XUnit
             _container.RegisterInstance(appConfig);
         }
 
-        // TODO WTS: Add tests for functionality you add to MainViewModel.
         [Fact]
         public void TestMainViewModelCreation()
         {
@@ -59,7 +58,6 @@ namespace DailyRatingsCalculator.Tests.XUnit
             Assert.NotNull(vm);
         }
 
-        // TODO WTS: Add tests for functionality you add to SettingsViewModel.
         [Fact]
         public void TestSettingsViewModelCreation()
         {
