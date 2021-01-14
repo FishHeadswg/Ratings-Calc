@@ -1,0 +1,157 @@
+﻿<UserControl
+    x:Class="DailyRatingsCalculator.Views.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:prism="http://prismlibrary.com/"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:properties="clr-namespace:DailyRatingsCalculator.Properties"
+    prism:ViewModelLocator.AutoWireViewModel="True"
+    Style="{StaticResource BaseUserControlStyle}"
+    mc:Ignorable="d"
+    d:DesignHeight="500" d:DesignWidth="600">
+    <Grid x:Name="MainGrid" Margin="{StaticResource XXSmallRightMargin}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="100" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" x:Name="Header">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+            </Grid.RowDefinitions>
+            <Image Grid.Row="0" Margin="0,0,0,2" Source="{StaticResource Header}" />
+        </Grid>
+        <Grid Grid.Row="1" x:Name="boardGrid" Height="50">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Style="{StaticResource LabelBlock}" Grid.Column="0" 
+                       Text="{x:Static properties:Resources.BoardSelectText}" />
+            <Button Style="{StaticResource BoardBtn}" x:Name="btnFourjp" 
+                    Content="{x:Static properties:Resources._4jpText}" Grid.Column="1" 
+                    IsEnabled="{Binding BoardGridEnabled}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Loaded">
+                        <i:InvokeCommandAction Command="{Binding SetAddBoardCommand}" CommandParameter="4/jp/" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="Click">
+                        <i:InvokeCommandAction Command="{Binding SetUpdateUICommand}" CommandParameter="4/jp/" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+            <Button Style="{StaticResource BoardBtn}" x:Name="btnGnfos" Content="{x:Static properties:Resources.GnfosText}" 
+                    Grid.Column="2" IsEnabled="{Binding BoardGridEnabled}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Loaded">
+                        <i:InvokeCommandAction Command="{Binding SetAddBoardCommand}" CommandParameter="/gnfos/" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="Click">
+                        <i:InvokeCommandAction Command="{Binding SetUpdateUICommand}" CommandParameter="/gnfos/" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+            <Button Style="{StaticResource BoardBtn}" x:Name="btnOta" Content="{x:Static properties:Resources.OtaText}" 
+                    Grid.Column="3" IsEnabled="{Binding BoardGridEnabled}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Loaded">
+                        <i:InvokeCommandAction Command="{Binding SetAddBoardCommand}" CommandParameter="/ota/" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="Click">
+                        <i:InvokeCommandAction Command="{Binding SetUpdateUICommand}" CommandParameter="/ota/" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+        </Grid>
+        <Grid Grid.Row="2" Height="100">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <TextBlock Style="{StaticResource LabelBlock}" Grid.Column="0" Grid.Row="0" 
+                       Text="{x:Static properties:Resources.CurrRatingText}" />
+            <TextBlock Style="{StaticResource LabelBlock}" Grid.Row="1" Grid.Column="0" 
+                       Text="{x:Static properties:Resources.FinalRatingText}" />
+            <TextBlock Style="{StaticResource RatingBlock}" Grid.Column="1" Grid.Row="0" 
+                       x:Name="txtCurrRating" d:Text="5.55" Text="{Binding CurrRating}" />
+            <TextBlock Style="{StaticResource RatingBlock}" Grid.Row="1" Grid.Column="1" 
+                       x:Name="txtFinalRating" d:Text="PENDING" Text="{Binding FinalRating}">
+                <TextBlock.Foreground>
+                    <SolidColorBrush Color="#FFBD0000" Opacity="{Binding FinalOpacity}" />
+                </TextBlock.Foreground>
+            </TextBlock>
+        </Grid>
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="55" />
+            </Grid.RowDefinitions>
+            <Grid  Grid.Column="1" x:Name="calcGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Button Style="{StaticResource CalcBtn}" Grid.Column="0" Grid.Row="0" 
+                        x:Name="zero" Content="0" Command="{Binding SetAddRatingCommand}"
+                        CommandParameter="0" IsEnabled="{Binding CalcGridEnabled}" />
+                <Button Style="{StaticResource CalcBtn}" Grid.Column="1" Grid.Row="0" 
+                        x:Name="one" Content="1" Command="{Binding SetAddRatingCommand}" 
+                        CommandParameter="1" IsEnabled="{Binding CalcGridEnabled}" />
+                <Button Style="{StaticResource CalcBtn}" Grid.Column="2" Grid.Row="0" 
+                        x:Name="two" Content="2" Command="{Binding SetAddRatingCommand}" 
+                        CommandParameter="2" IsEnabled="{Binding CalcGridEnabled}" />
+                <Button Style="{StaticResource CalcBtn}" Grid.Column="0" Grid.Row="1" 
+                        x:Name="three" Content="3" Command="{Binding SetAddRatingCommand}" 
+                        CommandParameter="3" IsEnabled="{Binding CalcGridEnabled}" />
+                <Button Style="{StaticResource CalcBtn}" Grid.Column="1" Grid.Row="1" 
+                        x:Name="four" Content="4" Command="{Binding SetAddRatingCommand}" 
+                        CommandParameter="4" IsEnabled="{Binding CalcGridEnabled}" />
+                <Button Style="{StaticResource CalcBtn}" Grid.Column="2" Grid.Row="1" 
+                        x:Name="five" Content="5" Command="{Binding SetAddRatingCommand}" 
+                        CommandParameter="5" IsEnabled="{Binding CalcGridEnabled}" />
+                <Button Style="{StaticResource CalcBtn}" Grid.Column="0" Grid.Row="2" 
+                        x:Name="six" Content="6" Command="{Binding SetAddRatingCommand}" 
+                        CommandParameter="6" IsEnabled="{Binding CalcGridEnabled}" />
+                <Button Style="{StaticResource CalcBtn}" Grid.Column="1" Grid.Row="2" 
+                        x:Name="seven" Content="7" Command="{Binding SetAddRatingCommand}" 
+                        CommandParameter="7" IsEnabled="{Binding CalcGridEnabled}" />
+                <Button Style="{StaticResource CalcBtn}" Grid.Column="2" Grid.Row="2" 
+                        x:Name="eight" Content="8" Command="{Binding SetAddRatingCommand}" 
+                        CommandParameter="8" IsEnabled="{Binding CalcGridEnabled}" />
+                <Button Style="{StaticResource CalcBtn}" Grid.Column="0" Grid.Row="3" 
+                        x:Name="nine" Content="9" Command="{Binding SetAddRatingCommand}" 
+                        CommandParameter="9" IsEnabled="{Binding CalcGridEnabled}" />
+                <Button Style="{StaticResource CalcBtn}" Grid.Column="1" Grid.Row="3" 
+                        x:Name="ten" Content="10" Command="{Binding SetAddRatingCommand}" 
+                        CommandParameter="10" IsEnabled="{Binding CalcGridEnabled}" />
+                <Button Style="{StaticResource CalcBtn}" Grid.Column="2" Grid.Row="3" 
+                        x:Name="undo" Content="{x:Static properties:Resources.UndoText}" 
+                        Command="{Binding SetUndoCommand}" IsEnabled="{Binding CalcGridEnabled}" />
+            </Grid>
+            <Image Grid.Row="0" Grid.Column="0" x:Name="boardImage" Source="{Binding Path=ImageUri}" Margin="10,55,10,0" HorizontalAlignment="Center" />
+            <Button Style="{StaticResource FinalCalcBtn}" Grid.Column="1" Grid.Row="1"  x:Name="btnFinal" Content="{x:Static properties:Resources.CalcFinalRatingText}"
+                     Command="{Binding SetDisplayFinalScoreCommand}" IsEnabled="{Binding CalcGridEnabled}" ></Button>
+        </Grid>
+    </Grid>
+</UserControl>
