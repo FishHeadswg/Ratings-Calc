@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Windows;
-
 using ControlzEx.Theming;
-
 using DailyRatingsCalculator.Contracts.Services;
 using DailyRatingsCalculator.Models;
 
