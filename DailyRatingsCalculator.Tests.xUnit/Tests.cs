@@ -7,6 +7,7 @@ namespace DailyRatingsCalculator.Tests.XUnit
         [Fact]
         public void TestMethod1()
         {
+
         }
     }
 }
